@@ -9,8 +9,6 @@ TEST_PORT = 8080
 STUDENT_NUMBER = 11312066
 HELO_RESPONSE = "HELO %s\nIP:localhost\nPort:%d\nStudentID:%d"
 
-logging.basicConfig(level=logging.INFO)
-
 class TestEchoMethods(unittest.TestCase):
   # @classmethod
   # def setUpClass(cls):
