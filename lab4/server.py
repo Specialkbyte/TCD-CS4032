@@ -49,7 +49,7 @@ def run_server(port, max_worker_threads=8, max_queue_size=100):
   try:
     # setup thread pool
     for i in xrange(max_worker_threads):
-      thread = Thread(target=connection_handler, args=(q))
+      thread = Thread(target=connection_handler, args=(q,))
       thread.daemon = True # daemonise so that KeyboardInterupt on main thread kills these threads too
       thread.start()
       
@@ -59,7 +59,7 @@ def run_server(port, max_worker_threads=8, max_queue_size=100):
     s.bind((host, port))
     s.listen(1)
     logging.info("Server has bound to socket on host '%s' and port '%d'" % (host, port))
-    while True
+    while True:
       # accept connections
       conn, addr = s.accept()
       logging.info("Accepting connection from address '%s'" % addr[0])

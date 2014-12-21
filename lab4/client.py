@@ -1,4 +1,4 @@
-
+from client_messages import JOIN_MESSAGE, LEAVE_MESSAGE, SEND_MESSAGE, DISCONNECT_MESSAGE
 
 class Client:
 
@@ -11,7 +11,9 @@ class Client:
     self._start()
 
   def _start():
-    pass
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    logging.info("Making connection to localhost:%d" % port)
+    s.connect(('localhost', port))
 
   def join_chatroom(chatroom):
     pass
