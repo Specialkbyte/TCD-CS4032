@@ -1,25 +1,25 @@
 JOIN_MESSAGE = """
-JOIN_CHATROOM: %(chatroom)s
+JOIN_CHATROOM: {chatroom}
 CLIENT_IP: 0
 PORT: 0
-CLIENT_NAME: %(handle)s
+CLIENT_NAME: {handle}
 """
 
 LEAVE_MESSAGE = """
-LEAVE_CHATROOM: %(room_ref)d
-JOIN_ID: %(client_id)d
-CLIENT_NAME: %(handle)s
+LEAVE_CHATROOM: {room_ref}
+JOIN_ID: {client_id}
+CLIENT_NAME: {handle}
 """
 
-SNED_MESSAGE = """
-CHAT: %(room_ref)d
-JOIN_ID: %(client_id)d
-CLIENT_NAME: %(handle)s
-MESSAGE: %(message)s \n\n
+SEND_MESSAGE = """
+CHAT: {room_ref}
+JOIN_ID: {client_id}
+CLIENT_NAME: {handle}
+MESSAGE: {message} \n\n
 """
 
 DISCONNECT_MESSAGE = """
 DISCONNECT: 0
 PORT: 0
-CLIENT_NAME: %(handle)s
+CLIENT_NAME: {handle}
 """
