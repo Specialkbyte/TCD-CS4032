@@ -1,0 +1,2 @@
+BAD_MESSAGE = 1
+SERVER = 2

@@ -1,7 +1,4 @@
 
-def parse_response(response):
-  pass
-
 def parse_join_response(response):
   '''
     Returns: (server_ip, port, room_ref, join_id)

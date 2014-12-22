@@ -6,8 +6,8 @@ BUFFER_SIZE = 1024
 
 class Client:
 
-  def __init__(self, handle):
-    self.server_port = 8081
+  def __init__(self, port, handle):
+    self.server_port = port
     self.handle = handle
     self.messages = []
     self.client_id = 0
@@ -21,7 +21,7 @@ class Client:
       chatroom=chatroom,
       handle=self.handle
     )
-    self._send_message(message)
+    response = self._send_message(message)
 
   def leave_chatroom(self, room_ref):
     message = LEAVE_MESSAGE.format(
@@ -29,7 +29,7 @@ class Client:
       client_id=self.client_id, 
       handle=self.handle
     )
-    self._send_message(message)
+    response = self._send_message(message)
 
   def send_message(self, room_ref, message):
     message = SEND_MESSAGE.format(
@@ -38,17 +38,20 @@ class Client:
       handle=self.handle,
       message=self.message
     )
-    self._send_message(message)
+    response = self._send_message(message)
 
   def terminate_connection(self, handle):
     message = DISCONNECT_MESSAGE.format(
       handle=self.handle
     )
+    response = self._send_message(message)
 
   def _send_message(self, message):
     self.s.sendall(message)
     logging.info("Sending: " + message)
 
-    data = self.s.recv(BUFFER_SIZE) # TODO fix this
+    response = self.s.recv(BUFFER_SIZE) # TODO fix this
 
-    logging.info("Received response: " + data)
+    logging.info("Received response: " + response)
+
+    return response

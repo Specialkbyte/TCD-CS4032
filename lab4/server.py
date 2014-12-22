@@ -20,22 +20,26 @@ from server_messages import JOINED_CHATROOM_MESSAGE, LEFT_CHATROOM_MESSAGE, MESS
 
 def route_message(conn, data):
   '''Figures out what kind of command the request is'''
-  logging.info("Routing message: " + data)
+  logging.info("Routing message: " + repr(data))
 
-  if data[:13] == "JOIN_CHATROOM":
-    client_join_chatroom(conn, data)
+  try:
+    if data[:13] == "JOIN_CHATROOM":
+      client_join_chatroom(conn, data)
 
-  elif data[:14] == "LEAVE_CHATROOM":
-    client_leave_chatroom(conn, data)
+    elif data[:14] == "LEAVE_CHATROOM":
+      client_leave_chatroom(conn, data)
 
-  elif data[:4] == "CHAT":
-    client_sent_message(conn, data)
+    elif data[:4] == "CHAT":
+      client_sent_message(conn, data)
 
-  elif data[:] == "DISCONNECT":
-    client_disconnect(conn, data)
+    elif data[:] == "DISCONNECT":
+      client_disconnect(conn, data)
 
-  else:
-    client_error(conn, error_codes.BAD_MESSAGE, "Couldn't parse message")
+    else:
+      client_error(conn, error_codes.BAD_MESSAGE, "Couldn't parse message")
+
+  except Exception as e:
+    client_error(conn, error_codes.SERVER, e.message)
 
 def client_join_chatroom(conn, data):
   logging.info("Client joined chatroom")
@@ -78,13 +82,13 @@ def client_sent_message(conn, data):
   # for each client in chatroom send message
 
 def client_error(conn, code, reason):
-  logging.info("Client error")
+  logging.info("Client error %d: %s" % (code, reason))
 
   message = ERROR_MESSAGE.format(
     code=code,
     reason=reason
   )
-  conn.sendall(messge)
+  conn.sendall(message)
 
 
 #
@@ -136,6 +140,7 @@ def run_server(port, max_worker_threads=8, max_queue_size=100):
 
   except (KeyboardInterrupt, SystemExit):
     logging.info("END: Shutting down service")
+    s.close()
     sys.exit(0)
 
 
